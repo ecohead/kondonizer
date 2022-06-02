@@ -1,0 +1,279 @@
+---
+sidebar_position: 3
+---
+
+# Specify API endpoints
+
+This option tells to the component which URLs fetch for each action made by the user. It is the most important configuration option because without it the custom-element can't work.
+
+It is divided in 5 endpoints :
+
+| Name                         | Description                                                                                                 |
+|:-----------------------------|:------------------------------------------------------------------------------------------------------------|
+| [`list`](#endpoint-list)     | Get the list of all medias                                                                                  |
+| [`show`](#endpoint-show)     | Get the details of one media identified by a unique ID, which can be an `id` (number) or an `uuid` (string) |
+| [`upload`](#endpoint-upload) | Insert a new media in the server                                                                            |
+| [`update`](#endpoint-update) | Save the media legend and alternative text updated in the modal sidebar                                     |
+| [`delete`](#endpoint-delete) | Remove a media from the site                                                                                |
+
+## Endpoint configuration options
+
+Each of these endpoints is near fully customizable with following options :
+- ` uri `
+  - Describe the URL to fetch for this action
+  - Value type : `string`
+- ` method `
+  - Describe the HTTP method to use
+  - Value type : `'GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'OPTIONS'|'HEAD'`
+- ` statusCodeOk `
+  - Describe the expected response status that triggers the good working workflow. If the API request status code doesn't match it, triggers an error message.
+  - Value type : `number`
+- ` fetchOptions `
+  - Pass optional fetch configuration for more specific needs (like CORS). The full possibilities can be viewed in the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
+
+:::tip
+If you pass an `undefined` value to the `upload` / `update` / `delete` endpoints (or omit them in the config), the associated behavior will be unavailable :
+- no `upload` endpoint → Deactivation of the upload feature
+- no `update` endpoint → Deactivation of the media edition feature
+- no `delete` endpoint → Deactivation of the media deletion feature
+:::
+
+## Endpoints shape
+
+### ` list ` {#endpoint-list}
+
+#### Example configuration
+
+```js
+defineConfig({
+  //...
+  endpoints: {
+    list: {
+      uri: `http://localhost/api/medias/list`,
+      method: 'GET',
+      fetchOptions: {
+        mode: 'cors'
+      },
+      statusCodeOk: 200
+    }
+  }
+})
+```
+
+#### Shape of the returned response
+
+Your server must return a response **in JSON format** following this scheme :
+
+```ts
+data: Array<{
+  id: string|number
+  filename: string
+  filesize?: string
+  filetype?: string
+  filepath?: string
+  altText?: string
+  legend?: string
+  uploadedAt: string
+  uploadedBy?: string
+}>
+```
+
+:::tip
+The fields marked with a `?:` are optional but highly recommended for a better design.
+:::
+
+---
+
+### ` show ` {#endpoint-show}
+
+#### Example configuration
+
+```js
+defineConfig({
+  //...
+  endpoints: {
+    show: {
+      uri: `http://localhost/api/medias/%identifier%`,
+      method: 'GET',
+      fetchOptions: {
+        mode: 'cors'
+      },
+      statusCodeOk: 200
+    }
+  }
+})
+```
+
+#### Shape of the returned response
+
+Your server must return a response **in JSON format** following this scheme :
+
+```ts
+data: {
+  id: string|number
+  filename: string
+  filesize?: string
+  filetype?: string
+  filepath?: string
+  altText?: string
+  legend?: string
+  uploadedAt: string
+  uploadedBy?: string
+}
+```
+
+:::tip
+The fields marked with a `?:` are optional but highly recommended for a better design.
+:::
+
+---
+
+### ` upload ` {#endpoint-upload}
+
+#### Example configuration
+
+```js
+defineConfig({
+  //...
+  endpoints: {
+    upload: {
+      uri: `${baseUri}/api/medias/upload`,
+      method: 'POST',
+      fetchOptions: {
+        mode: 'cors'
+      },
+      statusCodeOk: 201
+    }
+  }
+})
+```
+
+#### Shape of the returned response
+
+Your server must return a response **in JSON format** following this scheme :
+
+```ts
+data: {
+  id: string|number
+  filename: string
+  filesize?: string
+  filetype?: string
+  filepath?: string
+  altText?: string
+  legend?: string
+  uploadedAt: string
+  uploadedBy?: string
+}
+```
+
+:::tip
+The fields marked with a `?:` are optional but highly recommended for a better design.
+:::
+
+---
+
+### ` update ` {#endpoint-update}
+
+#### Example configuration
+
+```js
+defineConfig({
+  //...
+  endpoints: {
+    update: {
+      uri: `http://localhost/api/medias/%identifier%`,
+      method: 'PATCH',
+      fetchOptions: {
+        mode: 'cors'
+      },
+      statusCodeOk: 201
+    }
+  }
+})
+```
+
+#### Shape of the returned response
+
+Your server must return a response **in JSON format** following this scheme :
+
+```ts
+data: {
+  id: string|number
+  filename: string
+  filesize?: string
+  filetype?: string
+  filepath?: string
+  altText?: string
+  legend?: string
+  uploadedAt: string
+  uploadedBy?: string
+}
+```
+
+:::tip
+The fields marked with a `?:` are optional but highly recommended for a better design.
+:::
+
+---
+
+### ` delete ` {#endpoint-delete}
+
+#### Example configuration
+
+```js
+defineConfig({
+  //...
+  endpoints: {
+    delete: {
+      uri: `http://localhost/api/medias/%identifier%`,
+      method: 'DELETE',
+      fetchOptions: {
+        mode: 'cors'
+      },
+      statusCodeOk: 201
+    }
+  }
+})
+```
+
+#### Shape of the returned response
+
+Your server must return a response **in JSON format** following this scheme :
+
+```ts
+data: {}
+```
+
+:::tip
+The fields marked with a `?:` are optional but highly recommended for a better design.
+:::
+
+---
+
+## ` %identifier% ` special parameter
+
+If an endpoint needs the identifier of the media to execute an action (e.g. for the `show` or `update` methods), you can add the `%identifier%` special parameter anywhere in the endpoint `uri`
+option. At the time of the API request, kondonizer will replace this parameter by the current media identifier.
+
+Example for the update endpoint:
+ ```js
+ const config = defineConfig({
+  //...your config
+  endpoints: {
+    update: {
+      // highlight-next-line
+      uri: `http://localhost/api/medias/%identifier%`,
+      method: 'PATCH',
+      fetchOptions: {
+        mode: 'cors'
+      },
+      statusCodeOk: 201
+    }
+  }
+ });
+
+  /**
+   * The API request will fetch for the media with id 24 the following URL:
+   * `http://localhost/api/medias/24`
+   */
+ ```

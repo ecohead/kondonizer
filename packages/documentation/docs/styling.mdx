@@ -1,0 +1,188 @@
+---
+sidebar_position: 6
+---
+
+# Styling
+
+Kondonizer is fully themable with CSS variables. The following code block reference all variables available to edit the component accordingly to the website style.
+
+```css
+:host {
+    /* --- Color tokens --- */
+    --kondo-ds-colors-primary: null; /* Defaults to: `#4c1d95` */
+    --kondo-ds-colors-info: null; /* Defaults to: `#2563eb` */
+    --kondo-ds-colors-warning: null; /* Defaults to: `#f59e0b` */
+    --kondo-ds-colors-danger: null; /* Defaults to: `#dc2626` */
+    --kondo-ds-colors-success: null; /* Defaults to: `#16a34a` */
+    --kondo-ds-colors-neutral-050: null; /* Defaults to: `#f8fafc` */
+    --kondo-ds-colors-neutral-100: null; /* Defaults to: `#f1f5f9` */
+    --kondo-ds-colors-neutral-200: null; /* Defaults to: `#e2e8f0` */
+    --kondo-ds-colors-neutral-300: null; /* Defaults to: `#cbd5e1` */
+    --kondo-ds-colors-neutral-500: null; /* Defaults to: `#64748b` */
+    --kondo-ds-colors-neutral-700: null; /* Defaults to: `#334155` */
+    --kondo-ds-colors-neutral-900: null; /* Defaults to: `#0f172a` */
+    --kondo-ds-colors-white: null; /* Defaults to: `#ffffff` */
+    --kondo-ds-colors-black: null; /* Defaults to: `#000000` */
+
+    /* --- Accessibility tokens --- */
+    --kondo-default-outline-color: null; /* Defaults to: `#38bdf8` */
+    --kondo-default-modal-overlay-color: null; /* Defaults to: `hsla(223, 100%, 5%, .5)` */
+
+    /* --- Typography default settings --- */
+    --kondo-ds-default-font-size: null; /* Defaults to: `.9rem` */
+
+    /********************************
+     * OVERRIDES
+     ********************************/
+
+    /* Root element */
+    --kondo-root-border-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-300)` */
+    --kondo-root-border-radius: null; /* Defaults to: `.5rem` */
+    --kondo-root-background: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+
+    /* Buttons => Classic behavior */
+    --kondo-button-padding: null; /* Defaults to: `.5rem 1rem` */
+    --kondo-button-radius: null; /* Defaults to: `9999px` */
+    --kondo-button-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+    --kondo-button-background: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+    --kondo-button-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-100)` */
+
+    /* Buttons => Outline variant */
+    --kondo-outline-button-background: null; /* Defaults to: `transparent` */
+    --kondo-outline-button-color: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+    --kondo-outline-button-border-color: null; /* Defaults to: `2px solid var(--kondo-ds-colors-primary)` */
+
+    /* Buttons => Success variant */
+    --kondo-success-button-background: null; /* Defaults to: `var(--kondo-ds-colors-success)` */
+    --kondo-success-button-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-050)` */
+
+    /* Buttons => Square variant */
+    --kondo-square-button-radius: null; /* Defaults to: `.25rem` */
+    --kondo-square-button-background: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+    --kondo-square-button-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-square-button-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-200)` */
+
+    /* Preview => Root element */
+    --kondo-preview-radius: null; /* Defaults to: `.25rem` */
+    --kondo-preview-text-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-preview-background-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-100)` */
+
+    /* Preview => Container */
+    --kondo-preview-gap: null; /* Defaults to: `.5rem` */
+
+    /* Preview => PreviewItem */
+    --kondo-preview-item-radius: null; /* Defaults to: `.25rem` */
+    --kondo-preview-item-background: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+    --kondo-preview-item-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-200)` */
+    --kondo-preview-item-font-size: null; /* Defaults to: `.75rem` */
+    --kondo-preview-item-delete-radius: null; /* Defaults to: `9999px` */
+    --kondo-preview-item-delete-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-050)` */
+    --kondo-preview-item-delete-background: null; /* Defaults to: `var(--kondo-ds-colors-danger)` */
+    --kondo-preview-item-copy-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-050)` */
+    --kondo-preview-item-copy-background: null; /* Defaults to: `var(--kondo-ds-colors-info)` */
+
+    /* Modal => Overlay */
+    --kondo-modal-overlay-color: null; /* Defaults to: `hsla(223, 100%, 5%, .5)` */
+
+    /* Modal => Container */
+    --kondo-modal-background: null; /* Defaults to: `var(--kondo-ds-colors-neutral-050)` */
+    --kondo-modal-radius: null; /* Defaults to: `.5rem` */
+
+    /* Modal => Sidebar */
+    --kondo-sidebar-width: null; /* Defaults to: `250px` */
+    --kondo-sibebar-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-100)` */
+
+    /* Modal => Edit Media */
+    --kondo-edit-title-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-edit-buttons-background: null; /* Defaults to: `transparent` */
+    --kondo-edit-buttons-radius: null; /* Defaults to: `9999px` */
+    --kondo-edit-delete-color: null; /* Defaults to: `var(--kondo-ds-colors-danger)` */
+    --kondo-edit-delete-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-danger)` */
+    --kondo-edit-close-color: null; /* Defaults to: `var(--kondo-ds-colors-info)` */
+    --kondo-edit-close-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-info)` */
+    --kondo-edit-save-color: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+    --kondo-edit-save-background: null; /* Defaults to: `transparent` */
+    --kondo-edit-save-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-primary)` */
+    --kondo-edit-save-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+    --kondo-edit-save-disabled-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-300)` */
+    --kondo-edit-save-disabled-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-300)` */
+    --kondo-edit-thumbnail-radius: null; /* Defaults to: `.25rem` */
+    --kondo-edit-thumbnail-background: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+    --kondo-edit-thumbnail-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-300)` */
+    --kondo-edit-thumbnail-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-edit-thumbnail-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+    --kondo-edit-separator-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-300)` */
+    --kondo-edit-details-font-size: null; /* Defaults to: `.8rem` */
+    --kondo-edit-details-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-edit-form-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+    --kondo-edit-label-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-edit-input-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-300)` */
+    --kondo-edit-input-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-edit-input-placeholder-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-300)` */
+    --kondo-edit-error-font-size: null; /* Defaults to: `.8rem` */
+    --kondo-edit-error-color: null; /* Defaults to: `var(--kondo-ds-colors-danger)` */
+
+    /* Modal => Footer */
+    --kondo-foooter-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-100)` */
+    --kondo-footer-text-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+
+    /* Modal => Header */
+    --kondo-header-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-100)` */
+    --kondo-header-dropdown-radius: null; /* Defaults to: `.25rem` */
+    --kondo-header-dropdown-background: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+    --kondo-header-dropdown-shadow: null; /* Defaults to: `4px 0 5px 5px rgba(0, 0, 0, .05)` */
+    --kondo-header-dropdown-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-100)` */
+    --kondo-header-choice-accent-color: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+    --kondo-header-choice-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-header-choice-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+    --kondo-header-search-radius: null; /* Defaults to: `9999px` */
+    --kondo-header-search-background: null; /* Defaults to: `var(--kondo-ds-colors-neutral-200)` */
+    --kondo-header-search-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+    --kondo-header-layout-icons-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-050)` */
+    --kondo-header-layout-icons-background: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+    --kondo-header-layout-icons-border-color: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+
+    /* Modal => Gallery */
+    --kondo-list-hover-background: null; /* Defaults to: `var(--kondo-ds-colors-neutral-100)` */
+    --kondo-list-hover-color: null; /* Defaults to: `currentColor` */
+    --kondo-gallery-item-accent-color: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+    --kondo-gallery-item-radius: null; /* Defaults to: `.25rem` */
+    --kondo-gallery-item-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-neutral-100)` */
+    --kondo-gallery-item-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-gallery-item-selected-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-primary)` */
+    --kondo-gallery-item-font-size: null; /* Defaults to: `.75rem` */
+    --kondo-gallery-item-edit-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-info)` */
+    --kondo-gallery-item-edit-color: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+    --kondo-gallery-item-edit-radius: null; /* Defaults to: `9999px` */
+    --kondo-gallery-item-edit-background: null; /* Defaults to: `var(--kondo-ds-colors-info)` */
+    --kondo-gallery-item-copy-border: null; /* Defaults to: `2px solid var(--kondo-ds-colors-info)` */
+    --kondo-gallery-item-copy-color: null; /* Defaults to: `var(--kondo-ds-colors-info)` */
+    --kondo-gallery-item-copy-radius: null; /* Defaults to: `9999px` */
+    --kondo-gallery-item-copy-background: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+
+    /* Modal => Upload */
+    --kondo-dropzone-radius: null; /* Defaults to: `.25rem` */
+    --kondo-dropzone-border-width: null; /* Defaults to: `2px` */
+    --kondo-dropzone-border-style: null; /* Defaults to: `dashed` */
+    --kondo-dropzone-border-color: null; /* Defaults to: `transparent` */
+    --kondo-dropzone-border-active-color: null; /* Defaults to: `var(--kondo-ds-colors-info)` */
+    --kondo-upload-text-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-500)` */
+    --kondo-upload-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+    --kondo-upload-title-color: null; /* Defaults to: `var(--kondo-ds-colors-primary)` */
+
+    /* Modal => Notifications */
+    --kondo-notification-radius: null; /* Defaults to: `.25rem` */
+    --kondo-notification-background: null; /* Defaults to: `var(--kondo-ds-colors-white)` */
+    --kondo-notification-shadow: null; /* Defaults to: `0 0 20px 10px rgba(0, 0, 0, .03)` */
+    --kondo-notification-font-size: null; /* Defaults to: `var(--kondo-ds-default-font-size)` */
+
+    /* Dialog */
+    --kondo-danger-button-background: null; /* Defaults to: `var(--kondo-ds-colors-danger)` */
+    --kondo-danger-button-color: null; /* Defaults to: `var(--kondo-ds-colors-neutral-050)` */
+    --kondo-danger-button-border-color: null; /* Defaults to: `2px solid var(--kondo-ds-colors-danger)` */
+    --kondo-dialog-border: null; /* Defaults to: `solid 2px var(--kondo-ds-colors-danger)` */
+    --kondo-dialog-background: null; /* Defaults to: `var(--kondo-ds-colors-neutral-050)` */
+}
+```
+
+Each of these variable has a fallback defined by default, so you can only edit some styles at your convenience.

@@ -1,0 +1,124 @@
+---
+sidebar_position: 4
+---
+
+# Internationalization
+
+Kondonizer supports i18n process by default. You have 2 steps to reproduce to create and activate a new language.
+
+## Create the translation file
+
+To help you translate the component in a new language, you can pick the [default translation file on GitHub](#!).
+
+This file looks like as follows *(it's only an example, it can be out of date so please refer primarily to the repo file)* :
+
+```ts
+export default {
+  api_requests: {
+    common: {
+      no_endpoint_specified: 'ERR1000: No endpoint has been defined for the %action% action.',
+      response_not_ok: 'ERR1100: The request could not be completed. Please try again.',
+      response_status_unexpected: 'ERR1101: The status of the received response is not correct. Please try again.',
+      upload_returns_no_media: 'ERR1200: An error occurred during the upload. Please try again.',
+      upload_success: 'Media added.',
+      invalid_file_type: 'ERR2000: The format of this file is not allowed.',
+      update_success: 'The media has been updated.',
+      delete_success: 'The media has been removed from the site'
+    }
+  },
+  ui: {
+    common: {
+      close: 'Close',
+      copy_link: 'Copy the link',
+      edit: 'Edit',
+      open_modal: 'Open the media library',
+      link_copied: 'The link has been copied to your clipboard.',
+    },
+    sidebar_edit: {
+      title: 'Media information',
+      close_detail: 'Close the detail',
+      save_changes: 'Save',
+      delete_media: 'Remove media from site',
+      form: {
+        alt_text_label: 'Alternative text',
+        alt_text_placeholder: 'Write here...',
+        legend_label: 'Caption',
+        legend_placeholder: 'Write here...',
+      },
+      media_infos: {
+        name: 'Name',
+        type: 'Type',
+        size: 'Size',
+        uploaded_at: 'Uploaded on',
+        uploaded_by: 'Uploaded by'
+      },
+    },
+    modal_footer: {
+      confirm_selection: 'Confirm selection',
+      no_media_selected: 'No media selected',
+      one_media_selected: '1 media selected',
+      multiple_medias_selected: '%count% selected media',
+      selection_constraint_min: 'You can select at least %min% media',
+      selection_constraint_max: 'You can select at most %max% media',
+      selection_constraint_between: 'You can select between %min% and %max media',
+    },
+    modal_header: {
+      search_placeholder: 'Search for a media...',
+      layout_grid: 'Order in grid',
+      layout_list: 'Order in list',
+      refresh: 'Refresh',
+      filter_by_filetype: 'Filter by file type',
+      sort_by: 'Display order',
+      translate: 'Translate',
+      confirm_choice: 'Validate',
+      clear_filters: 'By default'
+    },
+    modal_list: {
+      no_media: 'No media to display :('
+    },
+    modal_upload: {
+      title: 'Add media to the library',
+      button_label: 'Select...',
+      help_message: 'Or drag and drop files here'
+    },
+    preview: {
+      no_media_selected: 'No media selected.',
+      remove_from_selection: 'Remove from selection'
+    },
+    filters: {
+      filename: 'Filename',
+      uploadedAt: 'Upload date',
+    }
+  }
+}
+```
+
+:::tip
+You should keep the errors identifiers in `api_requests` translations because it's a way to debug more simply, both for you and for us as maintainers if one of the request doesn't act as expected.
+:::
+
+---
+
+## Add the new language to the configuration
+
+Now that you have a translation file ready, you must specify the new language in the configuration option [`translations`](./configuration-options#translations), like this example :
+
+``` js
+// At top of the file
+import YourItalianTranslation from './path/to/your/translation/file'
+
+// In the configuration object
+{
+  ...,
+  translations: {
+    'it': YourItalianTranslation
+  }
+}
+```
+
+This will automatically inject the new translation into the component, and display the new entry in the multilingual dropdown in the modal header.
+
+## Specify a default language different from english
+
+To display by default another language than english, you can specify the [`activeLang configuration option`](./configuration-options#activeLang).
+The key used to activate that language must be the same as one you set as key in the translations option.

@@ -1,0 +1,179 @@
+---
+sidebar_position: 1
+slug: /
+---
+
+# Getting Started
+
+This documentation will help you integrate the `<eco-kondonizer>` custom-element into your website, even if you're using a front-end framework or not.
+
+import BrowserOnly from '@docusaurus/BrowserOnly';
+
+export const KondoDemo = () => (
+  <BrowserOnly fallback={<div></div>}>
+    {() => {
+      const MediaLibrary = require("../src/components/MediaLibrary").default;
+      return <MediaLibrary />
+    }}
+  </BrowserOnly>
+)
+
+<KondoDemo />
+
+## Installation
+
+You can use your preferred package manager.
+
+[npm](https://www.npmjs.com/)
+```bash
+npm install @ecohead/kondonizer --save
+```
+[yarn](https://yarnpkg.com/)
+```bash
+yarn add @ecohead/kondonizer --save
+```
+[pnpm](https://pnpm.io/)
+```bash
+pnpm install @ecohead/kondonizer --save
+```
+
+## Configuration
+
+### Add the custom-element to your page
+
+The first step is to place the HTML tag where you need it in your template :
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <!-- Calls the custom-element -->
+  <eco-kondonizer></eco-kondonizer>
+</body>
+</html>
+```
+
+At this point, you will see any changes, because you need to create an instance of kondonizer to actually display the component UI.
+
+### Create a new instance of the component
+
+The `eco-kondonizer` custom element provide a method to create a new instance with some options. To display the component UI, you need to create a new instance as follows :
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="js" label="JavaScript">
+
+  ```js title="your-file-location.js"
+    // At the top of the file
+    import { EcoKondonizer, defineConfig } from "@ecohead/kondonizer";
+
+    // Anywhere in the same file
+    const kondonizer = document.querySelector('eco-kondonizer');
+
+    if (!kondonizer) return;
+
+    kondonizer.createInstance({
+      // Create default options, but necessary to be customized
+      config: defineConfig(),
+      // Pass [] to no existing selection, or an array of ids (e.g. [12,28,46])
+      selectedMedias: [],
+      // Defaults to 'en-US'
+      defaultLang: 'fr-FR'
+    });
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```ts title="your-file-location.ts"
+    // At the top of the file
+    import { EcoKondonizer, defineConfig } from "@ecohead/kondonizer";
+
+    // Anywhere in the same file
+    const kondonizer = document.querySelector('eco-kondonizer') as EcoKondonizer|null;
+
+    if (!kondonizer) return;
+
+    kondonizer.createInstance({
+      // Create default options, but necessary to be customized
+      config: defineConfig(),
+      // Pass [] to no existing selection, or an array of ids (e.g. [12,28,46])
+      selectedMedias: [],
+      // Defaults to 'en-US'
+      defaultLang: 'fr-FR'
+    });
+  ```
+
+  </TabItem>
+</Tabs>
+
+:::info
+**All the options available are listed [here](./configuration-options).**
+:::
+
+:::caution
+Some config options are required (e.g. **server endpoints**), so you need to pass a correct config to view the component UI.
+:::
+
+### Listen to selection confirmation
+
+A [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) is emitted each time the user clicks on the confirm button in the modal.
+So, to get the user selection, you have to listen to this event as follows :
+
+<Tabs>
+  <TabItem value="js" label="JavaScript">
+
+  ```js title="your-file-location.js"
+    kondonizer.addEventListener('kondoupdate', (e) => {
+      console.log(e.detail)
+    });
+
+    /**
+     * Outputs :
+     * {
+     *    identifier: 'some-uuid', // Unique identifier of the instance
+     *    selection: [12,24] // All media ids selected in the modal
+     * }
+     */
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```ts title="your-file-location.ts"
+    import { KondonizerExport } from "@ecohead/kondonizer";
+
+    kondonizer.addEventListener<'kondoupdate'>('kondoupdate', (e: CustomEvent<KondonizerExport>) => {
+      console.log(e.detail)
+    });
+
+    // Include this to help TypeScript auto-complete the e.detail value :
+    declare global {
+      interface ElementEventMap {
+        'kondoupdate': CustomEvent<KondonizerExport>
+      }
+    }
+
+    /**
+    * Outputs :
+    * {
+    *    identifier: 'some-uuid', // Unique identifier of the instance
+    *    selection: [12,24] // All media ids selected in the modal
+    * }
+    */
+  ```
+
+  </TabItem>
+</Tabs>
+
+### Et voilà !
+
+You now have a fully functional web component that you can integrate in any of your templates.
+
+If you need more details in the integration in the most popular front-end frameworks and libraries, see [Integrate with front-end frameworks](./integrate-with-frameworks).

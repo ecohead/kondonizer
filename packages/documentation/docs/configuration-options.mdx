@@ -1,0 +1,259 @@
+---
+sidebar_position: 2
+---
+
+# Configuration options
+
+Here is the full list of configuration options available :
+
+## `endpoints` {#endpoints}
+
+:::info
+This option is required.
+:::
+
+This option is absolutely necessary to have a working custom element. For an in-depth explanation of what you can specify, please read [Specify the API endpoints](./specify-api-endpoints).
+
+---
+
+## `identifierType` {#identifierType}
+
+:::info
+This option is required.
+:::
+
+Indicate to the component if the unique media id is an `id` (number) or a `uuid` (string).
+
+#### Option specification
+- Value type: `'string'|'number'`
+- Default value: `'number'`
+
+---
+
+## `multiple` {#multiple}
+
+:::info
+This option is required.
+:::
+
+Specify if the component can accept one or more media to be selected.
+This option impacts the design of the media list item :
+- `multiple: true` renders a `<input type="checkbox" />`
+- `multiple: true` renders a `<input type="radio" />`
+
+If you have more specific constraints for selection, see [selectionConstraints](#selectionConstraints).
+
+#### Option specification
+- Value type: `boolean`
+- Default value: `false`
+
+---
+
+## `selectionConstraints` {#selectionConstraints}
+
+This option allows you to specify limits to the user selection.
+
+For example :
+- `selectionConstraints: { min: 2, max: 4 }` allow the user to select **between 2 and 4 files** *(included)*
+- `selectionConstraints: { max: 4 }` allow the user to select **at most** 4 files *(included)*
+- `selectionConstraints: { min: 4 }` allow the user to select **at least** 4 files *(included)*
+
+If this option is active, you will see a helper message in the left part of the modal footer to indicates to the user the restrictions applied.
+
+#### Option specification
+- Value type: `{ min?: number; max?: number } | undefined`
+- Default value: `undefined`
+
+---
+
+## `acceptedFiletypes` {#acceptedFiletypes}
+
+List of all [MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types) accepted in the upload process.
+This option is applied on the dropzone validator and in the `accept` attribute of the file input.
+
+#### Example of accepted filetypes
+
+```js
+acceptedFiletypes: ['image/jpeg', 'application/pdf', 'image/svg']
+```
+
+#### Option specification
+- Value type: `string[]`
+- Default value: `undefined`
+
+---
+
+## `customPlaceholders` {#customPlaceholders}
+
+Allows to provide generic previews for filetypes not supported by a builtin preview (like image files).
+To add a new placeholder, you must provide two values :
+- the filetypes associated with this placeholder
+- the svg code that will be displayed
+- **OR** the image URL in case you don't need/want a svg
+
+The `defineConfig` method provides some defaults as follows :
+
+```js
+customPlaceholders: [
+  {
+    filetypes: ['application/pdf'],
+    svg: svgTemplate('<svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/></svg>')
+  },
+  {
+    filetypes: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+    svg: svgTemplate('<svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V11h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5Zm-6.839 9.688v-.522a1.54 1.54 0 0 0-.117-.641.861.861 0 0 0-.322-.387.862.862 0 0 0-.469-.129.868.868 0 0 0-.471.13.868.868 0 0 0-.32.386 1.54 1.54 0 0 0-.117.641v.522c0 .256.04.47.117.641a.868.868 0 0 0 .32.387.883.883 0 0 0 .471.126.877.877 0 0 0 .469-.126.861.861 0 0 0 .322-.386 1.55 1.55 0 0 0 .117-.642Zm.803-.516v.513c0 .375-.068.7-.205.973a1.47 1.47 0 0 1-.589.627c-.254.144-.56.216-.917.216a1.86 1.86 0 0 1-.92-.216 1.463 1.463 0 0 1-.589-.627 2.151 2.151 0 0 1-.205-.973v-.513c0-.379.069-.704.205-.975.137-.274.333-.483.59-.627.257-.147.564-.22.92-.22.357 0 .662.073.916.22.256.146.452.356.59.63.136.271.204.595.204.972ZM1 15.925v-3.999h1.459c.406 0 .741.078 1.005.235.264.156.46.382.589.68.13.296.196.655.196 1.074 0 .422-.065.784-.196 1.084-.131.301-.33.53-.595.689-.264.158-.597.237-.999.237H1Zm1.354-3.354H1.79v2.707h.563c.185 0 .346-.028.483-.082a.8.8 0 0 0 .334-.252c.088-.114.153-.254.196-.422a2.3 2.3 0 0 0 .068-.592c0-.3-.04-.552-.118-.753a.89.89 0 0 0-.354-.454c-.158-.102-.361-.152-.61-.152Zm6.756 1.116c0-.248.034-.46.103-.633a.868.868 0 0 1 .301-.398.814.814 0 0 1 .475-.138c.15 0 .283.032.398.097a.7.7 0 0 1 .273.26.85.85 0 0 1 .12.381h.765v-.073a1.33 1.33 0 0 0-.466-.964 1.44 1.44 0 0 0-.49-.272 1.836 1.836 0 0 0-.606-.097c-.355 0-.66.074-.911.223-.25.148-.44.359-.571.633-.131.273-.197.6-.197.978v.498c0 .379.065.704.194.976.13.271.321.48.571.627.25.144.555.216.914.216.293 0 .555-.054.785-.164.23-.11.414-.26.551-.454a1.27 1.27 0 0 0 .226-.674v-.076h-.765a.8.8 0 0 1-.117.364.699.699 0 0 1-.273.248.874.874 0 0 1-.401.088.845.845 0 0 1-.478-.131.834.834 0 0 1-.298-.393 1.7 1.7 0 0 1-.103-.627v-.495Zm5.092-1.76h.894l-1.275 2.006 1.254 1.992h-.908l-.85-1.415h-.035l-.852 1.415h-.862l1.24-2.015-1.228-1.984h.932l.832 1.439h.035l.823-1.439Z"/></svg>')
+  },
+  {
+    filetypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+    svg: svgTemplate('<svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V11h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM7.86 14.841a1.13 1.13 0 0 0 .401.823c.13.108.29.192.479.252.19.061.411.091.665.091.338 0 .624-.053.858-.158.237-.105.416-.252.54-.44a1.17 1.17 0 0 0 .187-.656c0-.224-.045-.41-.135-.56a1.002 1.002 0 0 0-.375-.357 2.028 2.028 0 0 0-.565-.21l-.621-.144a.97.97 0 0 1-.405-.176.37.37 0 0 1-.143-.299c0-.156.061-.284.184-.384.125-.101.296-.152.513-.152.143 0 .266.023.37.068a.624.624 0 0 1 .245.181.56.56 0 0 1 .12.258h.75a1.093 1.093 0 0 0-.199-.566 1.21 1.21 0 0 0-.5-.41 1.813 1.813 0 0 0-.78-.152c-.293 0-.552.05-.777.15-.224.099-.4.24-.527.421-.127.182-.19.395-.19.639 0 .201.04.376.123.524.082.149.199.27.351.367.153.095.332.167.54.213l.618.144c.207.049.36.113.462.193a.387.387 0 0 1 .153.326.512.512 0 0 1-.085.29.558.558 0 0 1-.255.193c-.111.047-.25.07-.413.07-.117 0-.224-.013-.32-.04a.837.837 0 0 1-.249-.115.578.578 0 0 1-.255-.384h-.764Zm-3.726-2.909h.893l-1.274 2.007 1.254 1.992h-.908l-.85-1.415h-.035l-.853 1.415H1.5l1.24-2.016-1.228-1.983h.931l.832 1.438h.036l.823-1.438Zm1.923 3.325h1.697v.674H5.266v-3.999h.791v3.325Zm7.636-3.325h.893l-1.274 2.007 1.254 1.992h-.908l-.85-1.415h-.035l-.853 1.415h-.861l1.24-2.016-1.228-1.983h.931l.832 1.438h.036l.823-1.438Z"/></svg>')
+  },
+  {
+    filetypes: ['image/svg'],
+    svg: svgTemplate('<svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM0 14.841a1.13 1.13 0 0 0 .401.823c.13.108.288.192.478.252.19.061.411.091.665.091.338 0 .624-.053.858-.158.237-.105.416-.252.54-.44a1.17 1.17 0 0 0 .187-.656c0-.224-.045-.41-.135-.56a1 1 0 0 0-.375-.357 2.027 2.027 0 0 0-.565-.21l-.621-.144a.97.97 0 0 1-.405-.176.37.37 0 0 1-.143-.299c0-.156.061-.284.184-.384.125-.101.296-.152.513-.152.143 0 .266.023.37.068a.625.625 0 0 1 .245.181.56.56 0 0 1 .12.258h.75a1.092 1.092 0 0 0-.199-.566 1.21 1.21 0 0 0-.5-.41 1.813 1.813 0 0 0-.78-.152c-.293 0-.552.05-.776.15-.225.099-.4.24-.528.421-.127.182-.19.395-.19.639 0 .201.04.376.123.524.082.149.199.27.351.367.153.095.332.167.54.213l.618.144c.207.049.36.113.462.193a.387.387 0 0 1 .153.326.512.512 0 0 1-.085.29.559.559 0 0 1-.256.193c-.111.047-.249.07-.413.07-.117 0-.224-.013-.32-.04a.837.837 0 0 1-.248-.115.578.578 0 0 1-.255-.384H0Zm4.575 1.09h.952l1.327-3.999h-.879l-.887 3.138H5.05l-.897-3.138h-.917l1.339 4Zm5.483-3.293c.076.152.123.316.14.492h-.776a.797.797 0 0 0-.096-.249.689.689 0 0 0-.17-.19.707.707 0 0 0-.237-.126.963.963 0 0 0-.3-.044c-.284 0-.506.1-.664.302-.157.2-.235.484-.235.85v.497c0 .235.033.44.097.616a.881.881 0 0 0 .305.413.87.87 0 0 0 .518.146.965.965 0 0 0 .457-.097.67.67 0 0 0 .273-.263c.06-.11.09-.23.09-.364v-.254h-.823v-.59h1.576v.798c0 .193-.032.377-.096.55a1.29 1.29 0 0 1-.293.457 1.37 1.37 0 0 1-.495.314c-.198.074-.43.111-.698.111a1.98 1.98 0 0 1-.752-.132 1.447 1.447 0 0 1-.534-.377 1.58 1.58 0 0 1-.319-.58 2.482 2.482 0 0 1-.105-.745v-.507c0-.36.066-.677.199-.949.134-.271.329-.482.583-.633.256-.152.564-.228.926-.228.238 0 .45.033.635.1.188.066.348.158.48.275.134.117.238.253.314.407Z"/></svg>')
+  },
+  {
+    filetypes: ['*'],
+    svg: svgTemplate('<svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/></svg>')
+  }
+]
+```
+
+:::caution
+You must use the `svgTemplate` method to render a svg code, otherwise you will encounter a render bug.
+:::
+
+:::tip
+The `*` filetype is used if no other one type corresponds to the current media filetype. If you don't want a default logo, you can suppress this entry from the `customPlaceholders` object.
+:::
+
+#### Option specification
+- Value type: `Array<{ filetypes: string[]; svg?: string; imageUrl?: string; }>`
+- Default value: `[]`
+
+---
+
+## `builtinPreviews` {#builtinPreviews}
+
+References all filetypes that renders directly the file as is (e.g. media files). All filetypes not specified here will be displayed in accordance with placeholders.
+
+#### Example config value
+
+```js
+builtinPreviews: [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/svg',
+  'image/webp',
+  'image/avif'
+]
+```
+
+#### Option specification
+- Value type: `Array<string>`
+- Default value: `['image/jpeg','image/png','image/gif','image/svg','image/webp','image/avif']`
+
+---
+
+## `validators` {#validators}
+
+This option allows you to specify validator schemas for the alternative text and legend form fields.
+While the validation doesn't pass, the user cannot update the current media, unless he/she corrects the errors displayed.
+The validation process is handled by [Zod](https://github.com/colinhacks/zod).
+
+#### Example validator schema
+
+```js
+editSchema() {
+  return z.object({
+    alt_text: z.string().min(5).optional(),
+    legend: z.string().max(8).optional()
+  })
+}
+```
+
+:::tip
+The `.optional()` method is useful when the field is nullable in your database, or in case you would authorize an update of only one field, but not necessarily both at same time.
+:::
+
+If the update feature is enabled and a validator schema is provided in the configuration, the user will see validation errors under the field concerned.
+
+#### Option specification
+- Value type: `{ editSchema?: () => ZodSchema } | undefined`
+- Default value: `undefined`
+
+---
+
+## `defaultArrangements` {#defaultArrangements}
+
+Specify a default behavior in the filter / sort / search processes, that will be applied at the first render of the modal.
+It can be customized by the user afterwards.
+
+#### Example arrangement
+
+```js
+defaultArrangements: {
+  filters: ['image/png', 'application.pdf'],
+  sort: {
+    field: 'filename',
+    order: 'ASC'
+  },
+  search: 'logo'
+}
+
+/**
+* This will display at the first render the list of medias that :
+* + are of type 'image/png' or 'application/pdf'
+* + contains 'logo' in their filename
+* and ordered by filenames in alphabetical order
+*/
+
+```
+
+#### Option specification
+- Value type: `{ filters: string[]; sorter: { field: 'filename'|'uploadedAt'; order: 'ASC'|'DESC' }; search?: string } | undefined`
+- Default value: `{ filters: [], sorter: { field: 'uploadedAt', order: 'DESC' } }`
+
+---
+
+## `defaultGalleryLayout` {#defaultGalleryLayout}
+
+Apply the `grid` or `list` view to the user at the first render.
+It can be customized by the user afterwards.
+
+#### Example of accepted filetypes
+
+```js
+defaultGalleryLayout: 'grid'
+```
+
+#### Option specification
+- Value type: `'grid'|'list'`
+- Default value: `'grid'`
+
+---
+
+## `translations` {#translations}
+
+The component supports i18n by default. All strings are ready to translate, but subject to a defined process.
+
+For more information and in-depth explanation of how i18n works, please see [Internationalization](./internationalization).
+
+#### Option specification
+- Default value: `undefined`
+
+---
+
+## `activeLang` {#activeLang}
+
+Define the language displayed by default to the user.
+
+The format used can be of two types :
+- 2 letters code : 'en'
+- 4 letters code : 'en-GB' if you need a more precise translation
+
+For more information and in-depth explanation of how i18n works, please see [Internationalization](./internationalization).
+
+#### Option specification
+- Value type: `string`
+- Default value: `'en'`

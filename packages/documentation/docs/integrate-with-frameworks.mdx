@@ -1,0 +1,487 @@
+---
+sidebar_position: 5
+---
+
+# Integrate with frameworks
+
+Because kondonizer is distributes as a custom element, you can integrate it with any of the front-end frameworks. Here are some examples of integration with the mots popular ones.
+
+## [React](https://reactjs.org/)
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="js" label="JavaScript">
+
+  ```js title="MediaLibrary.js" showLineNumbers
+import React, { useEffect, useRef, useState } from "react";
+import { EcoKondonizer, defineConfig, KondonizerExport } from "@ecohead/kondonizer";
+
+export default function MediaLibrary() {
+	const ref = useRef();
+	const [selection, setSelection] = useState([]);
+
+	const config = defineConfig({
+		//...
+	});
+
+	useEffect(() => {
+		ref.current.createInstance({
+			config,
+			selectedMedias: selection,
+			defaultLang: 'en-US'
+		});
+
+		ref.current.addEventListener('kondoupdate', (e) => {
+			setSelection(e.detail.selection);
+		})
+	}, []);
+
+	return <eco-kondonizer ref={ref}></eco-kondonizer>;
+}
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```js title="MediaLibrary.ts" showLineNumbers
+import React, { useEffect, useRef, useState } from "react";
+import { EcoKondonizer, defineConfig, KondonizerExport } from "@ecohead/kondonizer";
+
+export default function MediaLibrary(): JSX.Element {
+	const ref = useRef<EcoKondonizer>();
+	const [selection, setSelection] = useState<Array<string|number>>([]);
+
+	const config = defineConfig({
+		//...
+	});
+
+	useEffect(() => {
+		ref.current.createInstance({
+			config,
+			selectedMedias: selection,
+			defaultLang: 'en-US'
+		});
+
+		ref.current.addEventListener<'kondoupdate'>('kondoupdate', (e: CustomEvent<KondonizerExport>) => {
+			setSelection(e.detail.selection);
+		})
+	}, []);
+
+	return <eco-kondonizer ref={ref}></eco-kondonizer>;
+}
+
+declare global {
+	namespace JSX {
+		interface IntrinsicElements {
+			'eco-kondonizer'
+		}
+	}
+
+	interface ElementEventMap {
+		'kondoupdate': CustomEvent<KondonizerExport>
+	}
+}
+  ```
+
+  </TabItem>
+</Tabs>
+
+
+## [Vue](https://vuejs.org/)
+
+<Tabs>
+  <TabItem value="js" label="JavaScript">
+
+  ```js title="MediaLibrary.vue" showLineNumbers
+<script setup>
+	import { ref, onMounted } from 'vue'
+	import { EcoKondonizer, defineConfig } from '@ecohead/kondonizer'
+
+	const kondonizer = ref(null)
+
+	const config = defineConfig({
+		//...
+	});
+
+	onMounted(() => {
+		kondonizer.value.createInstance({
+			config,
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		});
+	})
+
+	function handleSelection(event) {
+		console.log(event.detail)
+	}
+</script>
+
+<template>
+	<eco-kondonizer ref="kondonizer" @kondoupdate="handleSelection"></eco-kondonizer>
+</template>
+
+<style scoped>
+</style>
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```js title="MediaLibrary.vue" showLineNumbers
+<script setup lang="ts">
+	import { ref, onMounted } from 'vue'
+	import { EcoKondonizer, defineConfig, KondonizerExport } from '@ecohead/kondonizer'
+
+	const kondonizer = ref<typeof EcoKondonizer|null>(null)
+
+	const config = defineConfig({
+		//...
+	});
+
+	onMounted(() => {
+		kondonizer.value.createInstance({
+			config,
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		});
+	})
+
+	function handleSelection(event: CustomEvent<KondonizerExport>) {
+		console.log(event.detail)
+	}
+</script>
+
+<template>
+	<eco-kondonizer ref="kondonizer" @kondoupdate="handleSelection"></eco-kondonizer>
+</template>
+
+<style scoped>
+</style>
+  ```
+
+  </TabItem>
+</Tabs>
+
+:::caution
+If you're using [Vite](https://vitejs.dev/) with your application, you need to add an option to your vite config file to activate the custom elements discovery :
+```js title="vite.config.js"
+export default defineConfig({
+  plugins: [vue({
+		// highlight-start
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.includes('-')
+      }
+    }
+		// highlight-end
+  })]
+})
+```
+:::
+
+## [Angular](https://angular.io/)
+
+First, you must add a new schema to the module associated with your component to tell the framework that your custom element is not an Angular component :
+
+```js title="my-component.module.ts" showLineNumbers
+// highlight-next-line
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+	// highlight-next-line
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+Next you can integrate the component in the template file :
+```html title="my-component.component.html" showLineNumbers
+<eco-kondonizer #kondonizer></eco-kondonizer>
+```
+
+:::info
+The `#kondonizer` part is mandatory to get the element ref in the component file, but you can rename it as you want (as long as you update the `@ViewChild` parameter accordingly).
+:::
+
+Finally you can add the logic in your component file :
+
+```js title="my-component.component.ts" showLineNumbers
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { defineConfig, EcoKondonizer, KondonizerExport } from '@ecohead/kondonizer';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements AfterViewInit {
+  @ViewChild('kondonizer') kondonizer: typeof EcoKondonizer;
+
+  ngAfterViewInit(): void {
+    if (!this.kondonizer) return;
+
+    this.kondonizer.nativeElement.createInstance({
+      config: defineConfig({
+				//...
+			}),
+      selectedMedias: [12, 32],
+      defaultLang: 'en-US'
+    })
+
+    this.kondonizer.nativeElement.addEventListener('kondoupdate', this.handleSelection)
+  }
+
+  handleSelection(event: CustomEvent<KondonizerExport>) {
+    console.log(event.detail);
+  }
+}
+```
+
+## [Svelte](https://svelte.dev/)
+
+<Tabs>
+  <TabItem value="js" label="JavaScript">
+
+  ```js title="MediaLibrary.svelte" showLineNumbers
+<script>
+	import { defineConfig, EcoKondonizer } from '@ecohead/kondonizer';
+	import { onMount } from "svelte";
+
+	let kondonizer;
+
+	onMount(() => {
+		if (!kondonizer) return;
+
+		kondonizer.createInstance({
+			config: defineConfig({
+				//...
+			}),
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		})
+	})
+
+	const handleSelection = (event) => {
+		console.log(event.detail)
+	}
+</script>
+
+<eco-kondonizer bind:this={kondonizer} on:kondoupdate={handleSelection}></eco-kondonizer>
+
+<style></style>
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```js title="MediaLibrary.svelte" showLineNumbers
+<script lang="ts">
+	import { defineConfig, EcoKondonizer, KondonizerExport } from '@ecohead/kondonizer';
+	import { onMount } from "svelte";
+
+	let kondonizer;
+
+	onMount(() => {
+		if (!kondonizer) return;
+
+		kondonizer.createInstance({
+			config: defineConfig({
+				//...
+			}),
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		})
+	})
+
+	const handleSelection = (event: CustomEvent<KondonizerExport>) => {
+		console.log(event.detail)
+	}
+</script>
+
+<eco-kondonizer bind:this={kondonizer} on:kondoupdate={handleSelection}></eco-kondonizer>
+
+<style></style>
+  ```
+
+  </TabItem>
+</Tabs>
+
+## [Solid](https://www.solidjs.com/)
+
+<Tabs>
+  <TabItem value="js" label="JavaScript">
+
+  ```js title="MediaLibrary.jsx" showLineNumbers
+import { defineConfig, EcoKondonizer } from "@ecohead/kondonizer/lib/index";
+import { onMount } from "solid-js";
+
+function MediaLibrary() {
+	let kondonizer;
+
+	const handleSelection = (event) => {
+		console.log(event.detail)
+	}
+
+	onMount(() => {
+		if (!kondonizer) return;
+
+		kondonizer.createInstance({
+			config: defineConfig({
+				//...
+			}),
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		})
+
+		kondonizer.addEventListener('kondoupdate', handleSelection);
+	})
+
+	return <eco-kondonizer ref={kondonizer}></eco-kondonizer>;
+}
+
+export default MediaLibrary;
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```js title="MediaLibrary.tsx" showLineNumbers
+import { defineConfig, EcoKondonizer, KondonizerExport } from "@ecohead/kondonizer/lib/index";
+import { onMount } from "solid-js";
+
+function MediaLibrary() {
+	let kondonizer;
+
+	const handleSelection = (event: CustomEvent<KondonizerExport>) => {
+		console.log(event.detail)
+	}
+
+	onMount(() => {
+		if (!kondonizer) return;
+
+		kondonizer.createInstance({
+			config: defineConfig({
+				//...
+			}),
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		})
+
+		kondonizer.addEventListener('kondoupdate', handleSelection);
+	})
+
+	return <eco-kondonizer ref={kondonizer}></eco-kondonizer>;
+}
+
+export default MediaLibrary;
+
+declare global {
+	interface ElementEventMap {
+		'kondoupdate': CustomEvent<KondonizerExport>
+	}
+}
+  ```
+
+  </TabItem>
+</Tabs>
+
+## [Lit](https://lit.dev/)
+
+<Tabs>
+  <TabItem value="js" label="JavaScript">
+
+  ```js title="media-library.js" showLineNumbers
+import { defineConfig, EcoKondonizer } from '@ecohead/kondonizer';
+import { html, LitElement } from 'lit';
+import { createRef, ref } from 'lit/directives/ref.js';
+
+export class MediaLibrary extends LitElement {
+	constructor() {
+		super()
+		this.kondonizer = createRef()
+	}
+
+	firstUpdated() {
+		this.kondonizer.value.createInstance({
+			config: defineConfig({
+				//...
+			}),
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		})
+	}
+
+	_handleSelection(event) {
+		console.log(event.detail)
+	}
+
+	render() {
+		return html`
+			<eco-kondonizer ${ref(this.kondonizer)} @kondoupdate=${this._handleSelection}></eco-kondonizer>
+		`
+	}
+}
+
+window.customElements.define('media-library', MediaLibrary)
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```js title="media-library.ts" showLineNumbers
+import { defineConfig, EcoKondonizer, KondonizerExport } from '@ecohead/kondonizer';
+import { css, html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators.js';
+import { createRef, ref, Ref } from 'lit/directives/ref.js';
+
+@customElement('media-library')
+export class MediaLibrary extends LitElement {
+	static styles = css``
+
+	private kondonizer: Ref<EcoKondonizer> = createRef()
+
+	firstUpdated() {
+		if (!this.kondonizer || !this.kondonizer.value) return;
+
+		this.kondonizer.value.createInstance({
+			config: defineConfig({
+				//...
+			}),
+			selectedMedias: [12, 32],
+			defaultLang: 'en-US'
+		})
+	}
+
+	private _handleSelection(event: CustomEvent<KondonizerExport>) {
+		console.log(event.detail)
+	}
+
+	render() {
+		return html`
+			<eco-kondonizer ${ref(this.kondonizer)} @kondoupdate=${this._handleSelection}></eco-kondonizer>
+		`
+	}
+}
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'kondoupdate': CustomEvent<KondonizerExport>
+	}
+}
+  ```
+
+  </TabItem>
+</Tabs>
