@@ -1,0 +1,11 @@
+packages:
+  - 'packages/core'
+  - 'packages/documentation'
+  - 'packages/examples/demo-angular'
+  - 'packages/examples/demo-lit'
+  - 'packages/examples/demo-lit-ts'
+  - 'packages/examples/demo-solid'
+  - 'packages/examples/demo-svelte'
+  - 'packages/examples/demo-svelte-ts'
+  - 'packages/examples/demo-vue'
+  - 'packages/examples/demo-vue-ts'

@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+pnpm-debug.log*
+node_modules
+.vscode
+.idea
+.DS_Store
