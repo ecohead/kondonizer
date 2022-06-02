@@ -1,0 +1,7 @@
+pnpm-debug.log*
+node_modules
+lib
+.vscode
+.idea
+.DS_Store
+custom-elements.json

@@ -1,0 +1,13 @@
+import { CSSResult } from "lit";
+export declare function useResetStyles(): CSSResult;
+export declare function useButtonStyles(): CSSResult;
+export declare function useRootStyles(): CSSResult[];
+export declare function usePreviewStyles(): CSSResult[];
+export declare function useModalStyles(): CSSResult[];
+export declare function useModalSidebarStyles(): CSSResult[];
+export declare function useEditMediaStyles(): CSSResult[];
+export declare function useModalFooterStyles(): CSSResult[];
+export declare function useModalHeaderStyles(): CSSResult[];
+export declare function useModalListStyles(): CSSResult[];
+export declare function useModalUploadStyles(): CSSResult[];
+export declare function useNotificationsStyles(): CSSResult[];
