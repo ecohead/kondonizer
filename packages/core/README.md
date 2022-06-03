@@ -20,12 +20,12 @@
 
 Kondonizer is a custom element (a native HTML tag) that can be integrated in any frontend code. It displays a media library based on a Media model, like WordPress does internally. You can select, upload, edit and delete one or multiple files, all based on a configuration object highly customizable.
 
-This web component needs between 2 and 5 API endpoints to be fully working. More info in the [documentation](https://aureldvx.fr/ecohead/kondonizer/specify-api-endpoints).
+This web component needs between 2 and 5 API endpoints to be fully working. More info in the [documentation](https://kondonizer.aureldvx.fr/specify-api-endpoints).
 
 
 ## Documentation
 
-The full documentation is accessible in a [dedicated website](https://aureldvx.fr/ecohead/kondonizer).
+The full documentation is accessible in a [dedicated website](https://kondonizer.aureldvx.fr/).
 
 
 ## Installation
@@ -131,7 +131,7 @@ You can also have a working demo on the documentation website.
 - [Bootstrap Icons](https://icons.getbootstrap.com/) for all icons
 - [Tailwind CSS](https://tailwindcss.com/) for default color palette
 - [Unsplash](https://unsplash.com/) for all demo images
-- [Adonis](https://adonisjs.com/) for demo API
+- [Symfony](https://symfony.com/) for demo API
 - [Docusaurus](https://docusaurus.io/) for documentation website
 
 ## License
