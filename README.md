@@ -18,7 +18,7 @@
 
 Kondonizer is a custom element (a native HTML tag) that can be integrated in any frontend code. It displays a media library based on a Media model, like WordPress does internally. You can select, upload, edit and delete one or multiple files, all based on a configuration object highly customizable.
 
-This web component needs between 2 and 5 API endpoints to be fully working. More info in the [documentation](https://kondonizer.aureldvx.fr/specify-api-endpoints).
+This web component needs between 2 and 5 API endpoints to be fully working. More info in the [documentation](https://kondonizer.aureldvx.fr/specify-api-endpoints/).
 
 
 ## Project architecture
