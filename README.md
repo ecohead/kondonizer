@@ -9,7 +9,6 @@
 
 ![npm](https://img.shields.io/npm/v/@ecohead/kondonizer?style=for-the-badge)
 ![NPM](https://img.shields.io/npm/l/@ecohead/kondonizer?style=for-the-badge)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/@ecohead/kondonizer?style=for-the-badge)
 
 ![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)
