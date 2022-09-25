@@ -1,5 +1,5 @@
 {
-  "name": "kondonizer",
+  "name": "@ecohead/kondonizer",
   "description": "🗂 A universal media library web component based on the Custom Elements standard.",
   "license": "MIT",
   "author": {
@@ -9,7 +9,7 @@
   },
   "version": "0.1.0",
   "type": "module",
-  "homepage": "https://ecohead.github.io/kondonizer/",
+  "homepage": "https://kondonizer.aureldvx.fr/",
   "keywords": [
     "Media Library",
     "Custom Elements",
